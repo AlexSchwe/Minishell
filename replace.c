@@ -55,19 +55,30 @@ int apply_parse(t_parse *parse)
 t_parse *alias_to_parser(char *str)
 {
 	int i;
+	int prev;
 	t_parse *current;
 	t_parse *head;
 
-	if (!str)
-		return (NULL);
-	i = -1;
+	i = 0;
+	while (str[i] && ft_strrchr("\t \n\v\f\r", str[i]))
+		i++;
 	head = set_head_parser();
 	current = head;
+	prev = i--;
 	while (str[++i])
-		if (ft_strrchr("\'\"\t \n\v\f\r", str[i]) && 
-		(!current->type || current->type == str[i]))
-			current = set_parse(str, i, current);
-	set_tail(str, i, current);
+	{
+		if (ft_strrchr("\t \n\v\f\r", str[i]))
+		{
+			if (i > prev)
+			{
+				current->content = ft_strndup(str + prev, i - prev);
+				current = create_parse(current, NULL, 0, 0, 0);
+			}
+			current->space = 1;
+			prev = i + 1;
+		}
+	}
+	current->content = ft_strndup(str + prev, i - prev);
 	return (head);
 }
 
@@ -80,7 +91,8 @@ int 	apply_alias(t_parse *parse)
 		return (1);
 	if (ft_strlen(parse->content) <= 1)
 		return (0);
-	value = find_key(parse->content);
+	value = find_key(parse->content + 1);
+	value = value ? ft_strdup(value) : ft_strdup("");
 	free(parse->content);
 	if (parse->type == '\"')
 	{
@@ -88,6 +100,13 @@ int 	apply_alias(t_parse *parse)
 		return (0);
 	}
 	new = alias_to_parser(value);
+	free(value);
+	if (!new)
+		return (0);
+	printf("new = %p\n", new);
+	printf("new->content = %p\n", new->content);
+	printf("parse = %p\n", parse);
+	printf("parse->content = %p\n", parse->content);
 	parse->content = new->content;
 	if (new->next)
 		insert_list(parse, new->next);
