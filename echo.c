@@ -47,7 +47,7 @@ int  ft_echo(t_parse *parse)
 	while (parse && parse->content)
 	{
 		write(1, parse->content, ft_strlen(parse->content));
-		if (parse->next->content)
+		if (parse->next && parse->next->content)
 			write(1, " ", 1);
 		parse = parse->next;
 	}

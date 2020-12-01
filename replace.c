@@ -103,10 +103,6 @@ int 	apply_alias(t_parse *parse)
 	free(value);
 	if (!new)
 		return (0);
-	printf("new = %p\n", new);
-	printf("new->content = %p\n", new->content);
-	printf("parse = %p\n", parse);
-	printf("parse->content = %p\n", parse->content);
 	parse->content = new->content;
 	if (new->next)
 		insert_list(parse, new->next);
