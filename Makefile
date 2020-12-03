@@ -17,6 +17,7 @@ CFLAGS	=	-IIncludes/ -g3 -fsanitize=address -fno-omit-frame-pointer -Wall -Werro
 CC		=	gcc
 
 SRC		=	built_in.c \
+			chevron.c \
 			env_support.c \
 			parser.c \
 			echo.c \
@@ -34,6 +35,7 @@ SRC		=	built_in.c \
 			pipe.c \
 			replace.c \
 			support.c \
+			support2.c \
 			ft_unset.c \
 			t_cmd.c \
 			t_cmd_support.c

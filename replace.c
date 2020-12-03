@@ -115,10 +115,10 @@ int ft_replace(t_parse *head)
 	t_parse *parse;
 
 	parse = head;
+	if (ft_chevron(head))
+		return (1);
 	while (parse)
 	{
-//		if (parse->content && !parse->type && is_redir(parse->content))
-//			parse = ft_chevron(parse);
 		if (parse->alias)
 		{
 			if (apply_alias(parse))
@@ -134,6 +134,5 @@ int ft_replace(t_parse *head)
 				return (1);
 		parse = parse->next;
 	}
-//	return (merge_cmds(head));
-	return (0);
+	return (merge_cmds(head));
 }

@@ -79,6 +79,20 @@ void	ft_exit(t_parse *commands);
 int		ft_check_built_in(t_parse *head);
 
 /*
+*** chevron.c
+*/
+
+int 	ft_stdin(int fd);
+
+int 	alias_chevron(t_parse *parse);
+
+int 	merge_after_chevron(t_parse *parse);
+
+t_parse	*apply_chevron(t_parse *parse, int *error);
+
+int 	ft_chevron(t_parse *head);
+
+/*
 *** echo.c
 */
 
@@ -230,7 +244,7 @@ void	set_tail(char *str, int i, t_parse *current);
 ***parser_support.c
 */
 
-void	delete_parser(t_parse *current);
+t_parse *delete_parser(t_parse *current);
 
 int	free_parser(t_parse *head);
 
@@ -286,6 +300,14 @@ t_parse *alias_to_parser(char *str);
 int 	apply_alias(t_parse *parse);
 
 int ft_replace(t_parse *head);
+
+/*
+*** support2.c
+*/
+
+int		file_transfer(int fds, int fdd);
+
+int 	merge_cmds(t_parse *head);
 
 /*
 *** t_cmd.c

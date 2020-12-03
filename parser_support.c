@@ -1,9 +1,28 @@
 #include "minishell.h"
 
-void	delete_parser(t_parse *current)
+int len_parse(t_parse *parse)
 {
+	t_parse *current;
+	int dest;
+
+	current = parse;
+	dest = 0;
+	while (parse)
+	{
+		if (parse->content)
+			dest++;
+		parse = parse->next;
+	}
+	return (dest);
+}
+
+t_parse	*delete_parser(t_parse *current)
+{
+	t_parse *next;
+
 	if (!current)
-		return;
+		return NULL;
+	next = current->next;
 	if (current->previous)
 		current->previous->next = current->next;
 	if (current->next)
@@ -11,6 +30,7 @@ void	delete_parser(t_parse *current)
 	if (current->content)
 		free(current->content);
 	free(current);
+	return (next);
 }
 
 int	free_parser(t_parse *head)
@@ -34,6 +54,8 @@ int merge_parse(t_parse *first, t_parse *second)
 {
 	char *content;
 
+	if (!first || ! second)
+		return (0);
 	if (!first->content)
 		content = second->content;
 	else if (!second->content)

@@ -1,21 +1,5 @@
 #include "minishell.h"
 
-int len_parse(t_parse *parse)
-{
-	t_parse *current;
-	int dest;
-
-	current = parse;
-	dest = 0;
-	while (parse)
-	{
-		if (parse->content)
-			dest++;
-		parse = parse->next;
-	}
-	return (dest);
-}
-
 char **parse_to_char(t_parse *parse)
 {
 	char **dest;
