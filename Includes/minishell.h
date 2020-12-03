@@ -122,7 +122,7 @@ char	*find_key(char *str);
 
 t_env	*create_env(char *key, char *value);
 
-void	ft_print_env();
+int	ft_print_env();
 
 int 	insert_env(t_env *first, t_env *new);
 

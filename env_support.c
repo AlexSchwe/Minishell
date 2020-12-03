@@ -27,7 +27,7 @@ t_env	*create_env(char *key, char *value)
 	return (dest);
 }
 
-void	ft_print_env()
+int	ft_print_env()
 {
 	t_env *env;
 
@@ -41,8 +41,10 @@ void	ft_print_env()
 			if (env->value)
 				write(1, env->value, ft_strlen(env->value));
 		}
+		write(1, "\n", 1);
 		env = env->next;
 	}
+	return (0);
 }
 
 int	insert_env(t_env *first, t_env *new)
