@@ -1,13 +1,17 @@
 #include "minishell.h"
 
+/*
+*** détecte et renvoie vers les built-ins 
+*** ou executables pertinents
+*/
 
-int	launch_cmd(t_parse *head)
+int	exec_cmd(t_parse *head)
 {
 	pid_t pid;
 
-	if (ft_replace(head))
-		return (1);
 	g_status = 0;
+	if (!head || !head->content)
+		return (0);
 	if (!ft_check_built_in(head))
 		return (0);
 	pid = fork();
@@ -19,6 +23,34 @@ int	launch_cmd(t_parse *head)
 		waitpid(pid, &g_status, WUNTRACED);
 	return (0);
 }
+
+/*
+*** save stdin and stdout
+*** apply ft_replace, which replaces ">", "<" and "$"
+*** and exec 
+*/
+
+int	launch_cmd(t_parse *head)
+{
+	int ret;
+	int defout;
+	int defin;
+
+	if ((defout = dup(STDOUT_FILENO)) < 0 || (defin = dup(STDIN_FILENO)) < 0)
+			ft_error( strerror(errno), "", 1);
+	if (!ft_replace(head))
+		ret = exec_cmd(head->next);
+	else
+		ret = 1;
+	if ((dup2(defout, STDOUT_FILENO)) < 0 || (dup2(defin, STDIN_FILENO)) < 0)
+		ft_error(strerror(errno), "", 1);
+	return (ret);
+}
+
+/*
+*** extrait les commandes (sous forme de t_parse) puis les répartit en listes
+*** en fonction des pipes (sous forme de t_cmd)
+*/
 
 int	minishell(char *line)
 {

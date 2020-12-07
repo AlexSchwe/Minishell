@@ -18,13 +18,16 @@ int 	merge_cmds(t_parse *head)
 {
 	t_parse *current;
 
-	current = head;
+	current = head->next;
 	while (current)
 	{
 		if (!current->type && (!current->content || !ft_strlen(current->content)))
 			current = delete_parser(current);
-		else if (!current->space && merge_parse(current, current->next))
+		else if (!current->space && current->next)
+		{
+			 if (merge_parse(current, current->next))
 				return (1);
+		}
 		else
 			current = current->next;
 	}

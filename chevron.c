@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/*
+*** Remplace stdin par le contenu du fichier donné en argument
+*/
+
 int ft_stdin(int fd)
 {
 	int		pip[2];
@@ -17,16 +21,30 @@ int ft_stdin(int fd)
 	return (0);
 }
 
+
 int alias_chevron(t_parse *parse)
 {
-	apply_alias(parse);
-	if (len_parse(parse) != 1)
-		return (!free_parser(parse));
+	char *value;
+	t_parse *new;
+	int len;
+
+	value = find_key(parse->content + 1);
+	if (!value)
+		return (1);
 	free(parse->content);
+	parse->content = ft_strdup(value);
+	new = alias_to_parser(value);
+	len = len_parse(new);
+	free_parser(new);
+	if (len != 1 && !parse->type)
+		return (1);
 	parse->alias = 0;
-	free_parser(parse);
 	return (0);
 }
+
+/*
+*** gère les alias immédiatemment après les chevrons
+*/
 
 int merge_after_chevron(t_parse *parse)
 {
@@ -44,32 +62,40 @@ int merge_after_chevron(t_parse *parse)
 	return (0);
 }
 
+/*
+*** ouvre les fichiers concernés
+*** redirige stdout ou bien renvoie vers stdin
+*/
+
 t_parse *apply_chevron(t_parse *parse, int *error)
 {
 	int fd;
+	char *file;
 
 	if (merge_after_chevron(parse->next))
+	{
 		*error = !ft_error(parse->content, "ambiguous redir", 1);
+		return (NULL);
+	}
+	file = parse->next->content;
 	if (!ft_strcmp(parse->content, ">>"))
-		fd = open(parse->content, O_CREAT | O_APPEND);
+		fd = open(file, O_CREAT | O_APPEND | O_RDWR, 0644);
 	if (!ft_strcmp(parse->content, ">"))
-		fd = open(parse->content, O_CREAT | O_TRUNC);
+		fd = open(file, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (!ft_strcmp(parse->content, "<"))
-		fd = open(parse->content, O_RDONLY);
-	if (fd == -1)
-		*error = !ft_error(parse->content, strerror(errno), 1);
+		fd = open(file, O_RDONLY);
+	if (fd == -1 && !ft_error(file, strerror(errno), 1) && (*error = 1))
+		return (NULL);
 	if (!ft_strcmp(parse->content, ">") || !ft_strcmp(parse->content, ">>"))
-		if ((*error =  dup2(fd, STDOUT_FILENO)))
-			ft_error(">", strerror(errno), 1);
+		if ((dup2(fd, STDOUT_FILENO)) == -1)
+			*error = !ft_error(file, strerror(errno), 1);
 	if (!ft_strcmp(parse->content, "<"))
 		*error = ft_stdin(fd);
-	parse = delete_parser(parse);
-	parse = delete_parser(parse);
 	return (parse);
 }
 
 /*
-***redirige stdin ou stdout
+*** redirige stdin ou stdout
 *** supprime les commandes concernées
 *** détecte les erreur
 */
@@ -77,14 +103,18 @@ t_parse *apply_chevron(t_parse *parse, int *error)
 int 	ft_chevron(t_parse *head)
 {
 	t_parse *current;
-	current = head;
+	current = head->next;
 	int error;
 
 	error = 0;
 	while (current)
 	{
-		if (current->content && is_redir(current->content))
+		if (current->content && is_redir(current->content) && !current->type)
+		{
 			current = apply_chevron(current, &error);
+			current = delete_parser(current);
+			current = delete_parser(current);
+		}
 		else
 			current = current->next;
 		if (error)

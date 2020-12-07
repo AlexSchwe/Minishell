@@ -33,6 +33,7 @@ t_parse *create_parse(t_parse *current, char *content, int alias, int prev, int 
 	next->alias = alias;
 	next->prev = prev;
 	next->space = space;
+	next->type = 0;
 	next->previous = current;
 	return(next);
 }
@@ -41,8 +42,7 @@ void print_parser(t_parse *head)
 {
 	t_parse *current;
 
-	current = head;
-
+	current = head->next;
 	while (current)
 	{
 		if (current->content)
@@ -50,34 +50,4 @@ void print_parser(t_parse *head)
 		write(1, "\n", 1);
 		current = current->next;
 	}
-}
-
-t_parse *set_head_parser()
-{
-	t_parse *head;
-
-
-	if (!(head = malloc(sizeof(struct s_parse))))
-		return (NULL);
-	head->content = NULL;
-	head->type = 0;
-	head->next = NULL;
-	head->space = 0;
-	head->alias = 0;
-	head->previous = NULL;
-	head->prev = 0;
-	return (head);
-}
-
-/*
-***Découpe en plusieurs mots en fonction des guillemets
-*/
-void	set_tail(char *str, int i, t_parse *current)
-{
-	if (!current)
-		return;
-	if (i > current->prev)
-		current->content = ft_strndup(str + current->prev, i - current->prev);
-	else
-		delete_parser(current);
 }

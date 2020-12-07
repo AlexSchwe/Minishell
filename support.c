@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+int is_semi_pipe(char *content)
+{
+	return (!ft_strcmp(content, ";") || !ft_strcmp(content, "|"));
+}
+
 int ft_isspace(char c)
 {
 	if (c == ' ' || c == '\n' || c == '\t'

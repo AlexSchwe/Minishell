@@ -60,10 +60,12 @@ t_parse *alias_to_parser(char *str)
 	t_parse *head;
 
 	i = 0;
+	if (!str)
+		return (NULL);
+	head = set_head_parser();
+	current = head->next;
 	while (str[i] && ft_strrchr("\t \n\v\f\r", str[i]))
 		i++;
-	head = set_head_parser();
-	current = head;
 	prev = i--;
 	while (str[++i])
 	{
@@ -92,21 +94,27 @@ int 	apply_alias(t_parse *parse)
 	if (ft_strlen(parse->content) <= 1)
 		return (0);
 	value = find_key(parse->content + 1);
-	value = value ? ft_strdup(value) : ft_strdup("");
+	printf("key = %s\n", parse->content);
+	printf("value = %s\n", value);
+	value = value ? ft_strdup(value) : NULL;
 	free(parse->content);
 	if (parse->type == '\"')
 	{
 		parse->content = value;
 		return (0);
 	}
+	if (!value)
+		return (!(parse->content = NULL));
 	new = alias_to_parser(value);
+	print_parser(new);
 	free(value);
 	if (!new)
 		return (0);
-	parse->content = new->content;
-	if (new->next)
+	parse->content = ft_strdup(new->next->content);
+	if (new->next->next)
 		insert_list(parse, new->next);
-	free(new);
+	delete_parser(new->next);
+	delete_parser(new);
 	return (0);
 }
 
@@ -114,9 +122,9 @@ int ft_replace(t_parse *head)
 {
 	t_parse *parse;
 
-	parse = head;
 	if (ft_chevron(head))
 		return (1);
+	parse = head->next;
 	while (parse)
 	{
 		if (parse->alias)

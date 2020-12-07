@@ -57,6 +57,7 @@ t_env *find_env(char *key)
 	{
 		if (!ft_strcmp(env->key, key))
 			return (env);
+		env = env->next;
 	}
 	return (NULL);
 }
@@ -74,7 +75,6 @@ void export_env(char *key, char *value)
 	else
 		env = create_env(key, value);
 	insert_last(env);
-
 }
 
 void ft_free_env()

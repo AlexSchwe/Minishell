@@ -1,12 +1,5 @@
 #include "minishell.h"
 
-int is_semi_pipe(char *str)
-{
-	if (!str)
-		return (0);
-	return((!ft_strcmp(str, ";") || !ft_strcmp(str, "|")));
-}
-
 int is_redir(char *str)
 {
 	if (!str)
@@ -19,7 +12,7 @@ int ft_syntax_error(t_parse *head)
 {
 	t_parse *new;
 
-	new = head;
+	new = head->next;
 	if (!new)
 		return (0);
 	if (new && !(ft_strcmp(new->content, "|")) && !new->type)

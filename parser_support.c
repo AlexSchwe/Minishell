@@ -10,7 +10,10 @@ int len_parse(t_parse *parse)
 	while (parse)
 	{
 		if (parse->content)
+		{
+			printf("parse->content = %s\n", parse->content);
 			dest++;
+		}
 		parse = parse->next;
 	}
 	return (dest);
@@ -65,6 +68,7 @@ int merge_parse(t_parse *first, t_parse *second)
 	free(first->content);
 	first->content = content;
 	first->next = second->next;
+	first->space = second->space;
 	delete_parser(second);
 	return (0);
 }
@@ -74,7 +78,7 @@ int merge_chevron(t_parse *head)
 	t_parse *current;
 	int i;
 
-	current = head;
+	current = head->next;
 	i = 0;
 	while (current && current->next)
 	{
