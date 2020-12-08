@@ -96,7 +96,7 @@ int 	ft_chevron(t_parse *head);
 *** echo.c
 */
 
-int	ft_echo_n(t_parse *parse);
+t_parse	*ft_echo_n(t_parse *parse, int *n);
 
 int	ft_echo(t_parse *parse);
 

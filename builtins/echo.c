@@ -12,12 +12,11 @@
 
 #include "minishell.h"
 
-int	ft_echo_n(t_parse *parse)
+t_parse	*ft_echo_n(t_parse *parse, int *n)
 {
 	int j;
-	int n;
 
-	n = 0;
+	*n = 0;
 	if (parse && parse->content)
 	{
 		while (parse && !ft_strncmp(parse->content, "-n", 2))
@@ -26,15 +25,13 @@ int	ft_echo_n(t_parse *parse)
 			while (parse->content[j] && parse->content[j] == 'n')
 				j++;
 			if (!parse->content[j])
-				n = 1;
+				*n = 1;
 			else
-				return (n);
-		free(parse->content);
-		parse->content = NULL;
-		merge_parse(parse, parse->next);
+				return (parse);
+		parse = parse->next;
 		}
 	}
-	return (n);
+	return (parse);
 }
 
 int  ft_echo(t_parse *parse)
@@ -43,7 +40,7 @@ int  ft_echo(t_parse *parse)
 	int i;
 
 	i = 0;
-	n = ft_echo_n(parse);
+	parse = ft_echo_n(parse, &n);
 	while (parse && parse->content)
 	{
 		write(1, parse->content, ft_strlen(parse->content));
