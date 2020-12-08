@@ -77,6 +77,11 @@ int	minishell(char *line)
 	return (0);
 }
 
+void	ft_prompt(void)
+{
+	write(1, "minishell$", 10);
+}
+
 int		main(int argc, char **argv, char **env)
 {
 	char *line;
@@ -84,10 +89,15 @@ int		main(int argc, char **argv, char **env)
 	(void)argv;
 
 	set_env(env);
+	signal_set_up(&ft_handle_signal);
+	ft_prompt();
 	while (get_next_line(0, &line))
 	{
+		signal_set_up(&ft_handle_signal_child);
 		minishell(line);
 		free(line);
+		ft_prompt();
+		signal_set_up(&ft_handle_signal);
 	}
-	return (0);
+	return (ft_eof());
 }

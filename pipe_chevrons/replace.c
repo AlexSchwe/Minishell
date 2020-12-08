@@ -94,27 +94,21 @@ int 	apply_alias(t_parse *parse)
 	if (ft_strlen(parse->content) <= 1)
 		return (0);
 	value = find_key(parse->content + 1);
-	printf("key = %s\n", parse->content);
-	printf("value = %s\n", value);
-	value = value ? ft_strdup(value) : NULL;
+	value = value && ft_strcmp(parse->content, "$?") ? ft_strdup(value) : value;
 	free(parse->content);
-	if (parse->type == '\"')
+	if (parse->type == '\"' || !value)
 	{
 		parse->content = value;
 		return (0);
 	}
-	if (!value)
-		return (!(parse->content = NULL));
 	new = alias_to_parser(value);
-	print_parser(new);
 	free(value);
 	if (!new)
 		return (0);
 	parse->content = ft_strdup(new->next->content);
 	if (new->next->next)
-		insert_list(parse, new->next);
-	delete_parser(new->next);
-	delete_parser(new);
+		insert_list(parse, dup_list(new->next->next));
+	free_parser(new);
 	return (0);
 }
 

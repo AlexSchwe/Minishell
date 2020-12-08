@@ -24,23 +24,41 @@ void	set_tail(char *str, int i, t_parse *current)
 		delete_parser(current);
 }
 
+t_parse *set_parse_alias(char *str, int i, t_parse *current)
+{
+	t_parse *next;
+	int status;
+
+	next = current;
+	status = (str[i] == '?') ? 1 : 0;
+	next->space = ft_strrchr("\t \n\v\f\r", str[i]) ? 1 : 0;
+	next->content = ft_strndup(str + next->prev + 1, i - next->prev - 1 + status);
+	next = create_parse(next, NULL, 0, 0, 0);
+	next->prev = i - 1 + status;
+	next->alias = (str[i] == '$') ? 1 : 0;
+	if (ft_strrchr("\'\"", str[i]) && current->type != str[i])
+		next->type = str[i];
+	next->type = next->alias ? current->type : next->type;
+	return (next);
+}
+
 t_parse *set_parse(char *str, int i, t_parse *current)
 {
 	t_parse *next;
 
 	next = current;
-	next->space = ft_strrchr("\t \n\v\f\r", str[i]) ? 1 : 0;
+	if (ft_strrchr("\t \n\v\f\r", str[i]) && !current->type)
+		next->space = 1;
 	if (i > next->prev + 1 || next->type == str[i])
 	{
 		next->content = ft_strndup(str + next->prev + 1, i - next->prev - 1);
 		next = create_parse(next, NULL, 0, 0, 0);
 	}
-	next->prev = i;
 	next->alias = (str[i] == '$') ? 1 : 0;
+	next->prev = i - next->alias;
 	if (ft_strrchr("\'\"", str[i]) && current->type != str[i])
 		next->type = str[i];
 	next->type = next->alias ? current->type : next->type;
-	next->prev = next->prev - next->alias;
 	if (ft_strrchr("><|;", str[i]))
 	{
 		next->content = ft_strndup(&str[i], 1);
@@ -48,7 +66,6 @@ t_parse *set_parse(char *str, int i, t_parse *current)
 	}
 	return (next);
 }
-
 
 t_parse *cmd_to_parser(char *str)
 {
@@ -71,7 +88,7 @@ t_parse *cmd_to_parser(char *str)
 		else if (str[i] == '$' && current->type != '\'')
 			current = set_parse(str, i, current);
 		else if (current->alias && !ft_isalnum(str[i]) &&  str[i] != '_')
-			current = set_parse(str, i, current);
+			current = set_parse_alias(str, i, current);
 		else if (str[i] == '\\' && current->type != '\'')
 			i++;
 	}

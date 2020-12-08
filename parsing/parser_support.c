@@ -10,10 +10,7 @@ int len_parse(t_parse *parse)
 	while (parse)
 	{
 		if (parse->content)
-		{
-			printf("parse->content = %s\n", parse->content);
 			dest++;
-		}
 		parse = parse->next;
 	}
 	return (dest);

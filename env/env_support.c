@@ -11,6 +11,8 @@ char *find_key(char *str)
 			return (env->value);
 		env = env->next;
 	}
+	if (!ft_strcmp(str, "?"))
+		return (ft_itoa(g_status));
 	return (NULL);
 }
 

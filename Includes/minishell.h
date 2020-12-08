@@ -210,6 +210,8 @@ int	launch_cmd(t_parse *head);
 
 int	minishell(char *line);
 
+void	ft_prompt(void);
+
 int		main(int argc, char **argv, char **env);
 
 /*
@@ -263,6 +265,10 @@ void 	insert_list(t_parse *parse, t_parse *head);
 
 void 	cut_parser(t_parse *current);
 
+t_parse *dup_parse(t_parse *parse);
+
+t_parse *dup_list(t_parse *head);
+
 /*
 *** parsing.c
 */
@@ -300,6 +306,18 @@ t_parse *alias_to_parser(char *str);
 int 	apply_alias(t_parse *parse);
 
 int ft_replace(t_parse *head);
+
+/*
+*** signal.c
+*/
+
+void	signal_set_up(void (*ft_handler)(int));
+
+void	ft_handle_signal_child(int signum);
+
+void	ft_handle_signal(int signum);
+
+int		ft_eof(void);
 
 /*
 *** support2.c

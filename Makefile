@@ -16,29 +16,30 @@ CFLAGS	=	-IIncludes/ -g3 -fsanitize=address -fno-omit-frame-pointer -Wall -Werro
 
 CC		=	gcc
 
-SRC		=	built_in.c \
-			chevron.c \
-			env_support.c \
-			parser.c \
-			echo.c \
-			env.c \
-			env_support_2.c	\
-			error.c \
-			export.c \
-			export_p.c \
-			ft_cd.c \
+SRC		=	builtins/built_in.c \
+			pipe_chevrons/chevron.c \
+			env/env_support.c \
+			parsing/parser.c \
+			builtins/echo.c \
+			env/env.c \
+			env/env_support_2.c	\
+			support/error.c \
+			builtins/export.c \
+			builtins/export_p.c \
+			builtins/ft_cd.c \
 			main.c \
-			parse_exec.c \
-			parsing.c \
-			parser_support.c \
-			parser_support_2.c \
-			pipe.c \
-			replace.c \
-			support.c \
-			support2.c \
-			ft_unset.c \
-			t_cmd.c \
-			t_cmd_support.c
+			parsing/parse_exec.c \
+			parsing/parsing.c \
+			parsing/parser_support.c \
+			parsing/parser_support_2.c \
+			pipe_chevrons/pipe.c \
+			pipe_chevrons/replace.c \
+			support/support.c \
+			support/support2.c \
+			support/signal.c \
+			builtins/ft_unset.c \
+			parsing/t_cmd.c \
+			parsing/t_cmd_support.c
 
 
 OBJ = $(SRC:%.c=%.o)
