@@ -19,10 +19,10 @@ int	ft_unset(t_parse *cmds)
 		&& command[i] != '-' && command[i] != '.')
 			return (!ft_error("unset invalid parameter name", command, 1));
 	i = -1;
-	env = g_env_head;
+	env = g_env_head->next;
 	while (env)
 	{
-		if (!ft_strcmp(command, env->key))
+		if (env->key && !ft_strcmp(command, env->key))
 			return (delete_env(env));
 		env = env->next;
 	}
