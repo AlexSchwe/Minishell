@@ -62,7 +62,7 @@ t_parse *set_parse(char *str, int i, t_parse *current)
 	if (ft_strrchr("><|;", str[i]))
 	{
 		next->content = ft_strndup(&str[i], 1);
-		next = create_parse(current, NULL, 0, i, 0);
+		next = create_parse(next, NULL, 0, i, 0);
 	}
 	return (next);
 }

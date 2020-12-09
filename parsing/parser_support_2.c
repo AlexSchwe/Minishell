@@ -31,11 +31,10 @@ void 	cut_parser(t_parse *current)
 		return;
 	if (current->previous)
 		current->previous->next = NULL;
-	if (current->next)
-		current->next->previous = NULL;
+	current->previous = NULL;
 	if (current->content)
 		free(current->content);
-	free(current);
+	current->content = NULL;
 }
 
 t_parse *dup_parse(t_parse *parse)

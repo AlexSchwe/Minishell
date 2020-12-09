@@ -57,6 +57,8 @@ void print_list(t_cmd *head)
 	while (node)
 	{
 		print_parser(node->head);
+		write(1, "type =", 6);
+		write(1, &node->type, 1);
 		write(1, "\n", 1);
 		node = node->next;
 	}
@@ -81,7 +83,7 @@ t_cmd *set_list(t_parse *head)
 	t_cmd *new_head;
 	t_cmd *next_lst;
 	
-	next = head;
+	next = head->next;
 	new_head = create_cmd(head, NULL);
 	next_lst = new_head;
 	while (next)
@@ -89,14 +91,12 @@ t_cmd *set_list(t_parse *head)
 		if (next->next && next->content && !next->type &&
 		is_semi_pipe(next->content))
 		{
-			next_lst->next = create_cmd(next->next, next_lst);
+			next_lst->next = create_cmd(next, next_lst);
 			next_lst->type = next->content[0];
 			cut_parser(next);
 			next_lst = next_lst->next;
-			next = next_lst->head;
 		}
-		else
-			next = next->next;
+		next = next->next;
 	}
 	next_lst->next = NULL;
 	return (new_head);
