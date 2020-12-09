@@ -22,8 +22,8 @@ t_env	*create_env(char *key, char *value)
 
 	if (!(dest = malloc(sizeof(struct s_env))))
 		return (NULL);
-	dest->key = key;
-	dest->value = value;
+	dest->key = ft_strdup(key);
+	dest->value = ft_strdup(value);
 	dest->next = NULL;
 	dest->previous = NULL;
 	return (dest);

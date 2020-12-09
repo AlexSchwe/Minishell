@@ -26,10 +26,10 @@ int		ft_cd(t_parse *cmds)
 		path = find_key("HOME");
 	if (!(path))
 		return (!ft_error("cd", "HOME not set", 1));
-	if (!chdir(path))
+	if (chdir(path))
 		return (!(ft_error("cd", strerror(errno), 1)));
 	getcwd(buff, 1024);
-	export_env(ft_strdup("OLDPWD"), ft_strdup(find_key("PWD")));
-	export_env(ft_strdup("PWD"), buff);
+	export_env("OLDPWD", find_key("PWD"));
+	export_env("PWD", buff);
 	return (0);
 }

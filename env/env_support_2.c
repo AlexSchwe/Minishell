@@ -70,11 +70,13 @@ void export_env(char *key, char *value)
 	if (env)
 	{
 		free(env->value);
-		env->value = value;
+		env->value = ft_strdup(value);
 	}
 	else
+	{
 		env = create_env(key, value);
-	insert_last(env);
+		insert_last(env);
+	}
 }
 
 void ft_free_env()
