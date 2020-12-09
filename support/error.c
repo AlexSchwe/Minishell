@@ -15,7 +15,7 @@ int ft_syntax_error(t_parse *head)
 	new = head->next;
 	if (!new)
 		return (0);
-	if (new && !(ft_strcmp(new->content, "|")) && !new->type)
+	if (new && is_semi_pipe(new->content) && !new->type)
 		return (!ft_error("syntax error near unexpected token", new->content, 1));
 	while (new && new->next)
 	{
@@ -26,8 +26,12 @@ int ft_syntax_error(t_parse *head)
 			new = new->next;
 	}
 	if (!new->type)
+	{
 		if (!ft_strcmp(new->content, "|") || is_redir(new->content))
 			return (!ft_error("syntax error near unexpected token", new->content, 1));
+		if (!ft_strcmp(new->content, ";"))
+			delete_parser(new);
+	}
 	return (0);
 }
 
