@@ -1,0 +1,23 @@
+-r
+a
+amkdir
+b
+c
+c
+exec_test 
+d
+file
+file1 file2
+lol
+lol>test>>lol>test
+ls
+minishell
+out
+out1
+out2
+salut
+test
+test 1
+test.sh
+test1
+test\ 1

@@ -57,12 +57,14 @@ int merge_parse(t_parse *first, t_parse *second)
 	if (!first || ! second)
 		return (0);
 	if (!first->content)
-		content = second->content;
+		content = ft_strdup(second->content);
 	else if (!second->content)
 		content = first->content;
 	else 
+	{
 		content = ft_strjoin(first->content, second->content);
-	free(first->content);
+		free(first->content);
+	}
 	first->content = content;
 	first->next = second->next;
 	first->space = second->space;

@@ -12,7 +12,7 @@ void 	insert_list(t_parse *parse, t_parse *head)
 	t_parse *next;
 	t_parse *last;
 
-	if (!head || !head->next || !parse)
+	if (!head || !parse)
 		return;
 	next = parse->next;
 	parse->next = head;
@@ -41,7 +41,7 @@ t_parse *dup_parse(t_parse *parse)
 {
 	t_parse *dest;
 
-	if (!(dest = create_parse(NULL, parse->content, parse->alias, parse->prev, parse->space)))
+	if (!(dest = create_parse(NULL, ft_strdup(parse->content), parse->alias, parse->prev, parse->space)))
 		return(NULL);
 	dest->type = parse->type;
 	return (dest);
