@@ -23,10 +23,10 @@ void	signal_set_up(void (*ft_handler)(int))
 	signal(SIGQUIT, *ft_handler);
 	if (WIFSIGNALED(g_status))
 	{
-	if (WTERMSIG(g_status) == 2)
-		g_status = 130 * 256;
-	if (WTERMSIG(g_status) == 3)
-		g_status = 131 * 256;
+		if (WTERMSIG(g_status) == 2)
+			g_status = 130 << 8;
+		if (WTERMSIG(g_status) == 3)
+			g_status = 131 << 8;
 	}
 }
 

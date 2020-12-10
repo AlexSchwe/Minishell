@@ -12,7 +12,7 @@ char *find_key(char *str)
 		env = env->next;
 	}
 	if (!ft_strcmp(str, "?"))
-		return (ft_itoa(g_status));
+		return (ft_itoa(g_status >> 8));
 	return (NULL);
 }
 

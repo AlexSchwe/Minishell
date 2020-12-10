@@ -37,7 +37,7 @@ int	launch_cmd(t_parse *head)
 	int defin;
 
 	if ((defout = dup(STDOUT_FILENO)) < 0 || (defin = dup(STDIN_FILENO)) < 0)
-			ft_error( strerror(errno), "", 1);
+			ft_error(strerror(errno), "", 1);
 	if (!ft_replace(head))
 		ret = exec_cmd(head->next);
 	else
@@ -71,7 +71,7 @@ int	minishell(char *line)
 			launch_cmd(cmd->head);
 		while (cmd && cmd->type == '|')
 			cmd = cmd->next;
-			cmd = cmd->next;
+		cmd = cmd->next;
 	}
 	free_cmd(head);
 	return (0);
@@ -91,6 +91,7 @@ int		main(int argc, char **argv, char **env)
 	set_env(env);
 	signal_set_up(&ft_handle_signal);
 	ft_prompt();
+
 	while (get_next_line(0, &line))
 	{
 		signal_set_up(&ft_handle_signal_child);

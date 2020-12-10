@@ -11,7 +11,7 @@ int					redir_node(t_cmd *cmd, pid_t *pid, int i)
 		close_pipe_before(cmd);
 		if (cmd->previous && dup2(cmd->previous->pipes[0], 0) < 0)
 			return (!ft_error(strerror(errno), "|", 1));
-		if (cmd->next && dup2(cmd->pipes[1], 1) < 0)
+		if (cmd->type == '|' && dup2(cmd->pipes[1], 1) < 0) //&& cmd_type == '|'
 			return (!ft_error(strerror(errno), "|", 1));
 		launch_cmd(cmd->head);
 		if ((close(cmd->pipes[1]) < 0))

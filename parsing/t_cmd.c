@@ -36,9 +36,11 @@ int	close_pipe_before(t_cmd *cmd)
 int	close_pipe(t_cmd *head)
 {
 	t_cmd *current;
+	int i;
 
 	current = head;
-	while (current)
+	i = -1;
+	while (++i < len_pipe(head))
 	{
 		if ((close(current->pipes[0]) < 0))
 			ft_error(strerror(errno), "|", 1);
