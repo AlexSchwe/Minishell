@@ -85,7 +85,6 @@ void ft_free_env()
 	t_env *prev;
 
 	env = g_env_head;
-
 	while (env)
 	{
 		prev = env;
