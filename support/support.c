@@ -21,7 +21,7 @@ char *ft_strndup(char *str, int size)
 
 	if (!str || size < 0)
 		return (NULL);
-	len = (int)ft_strlen(str) > size ? size : ft_strlen(str);
+	len = (int)ft_strlen(str) > size ? size : (int)ft_strlen(str);
 	if (!(dest = malloc(len + 1)))
 		return (NULL);
 	i = -1;

@@ -23,7 +23,7 @@ int ft_syntax_error(t_parse *head)
 			if ((is_redir(new->content) && is_redir(new->next->content))
 			|| (is_semi_pipe(new->content) && is_semi_pipe(new->next->content)))
 				return (!ft_error("syntax error near unexpected token", new->content, 2));
-			new = new->next;
+		new = new->next;
 	}
 	if (!new->type)
 	{

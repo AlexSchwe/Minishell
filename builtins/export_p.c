@@ -14,13 +14,11 @@ void set_alpha()
 
 void ft_swap_alpha(t_env *preva, t_env *a, t_env *b)
 {
-	t_env *tmp;
 
 	if (preva)
 		preva->next_alpha = b;
-	tmp = a->next_alpha;
-	a->next_alpha = b;
-	b->next_alpha = b;
+	a->next_alpha = b->next_alpha;
+	b->next_alpha = a;
 }
 
 int tri_env(void)

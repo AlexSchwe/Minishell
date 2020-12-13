@@ -2,10 +2,8 @@
 
 int len_parse(t_parse *parse)
 {
-	t_parse *current;
 	int dest;
 
-	current = parse;
 	dest = 0;
 	while (parse)
 	{

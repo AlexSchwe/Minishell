@@ -18,7 +18,7 @@ t_env *create_env_str(char *env)
 
 	if (!ft_strchr(env, '='))
 		return (NULL);
-	pos = (int)ft_strchr(env, '=') - (int)env;
+	pos = (long)ft_strchr(env, '=') - (long)env;
 	key = ft_strndup(env, pos);
 	value = ft_strdup(env + pos + 1);
 	return (create_env(key, value));

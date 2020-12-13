@@ -37,9 +37,7 @@ t_parse	*ft_echo_n(t_parse *parse, int *n)
 int  ft_echo(t_parse *parse)
 {
 	int n;
-	int i;
 
-	i = 0;
 	parse = ft_echo_n(parse, &n);
 	while (parse && parse->content)
 	{
