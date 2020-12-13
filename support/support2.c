@@ -19,8 +19,6 @@ int 	merge_cmds(t_parse *head)
 	t_parse *current;
 
 	current = head->next;
-	printf("entree merge\n");
-	print_parser(head);
 	while (current)
 	{
 		if (!current->type && (!current->content || !ft_strlen(current->content)))

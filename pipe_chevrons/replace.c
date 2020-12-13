@@ -91,7 +91,7 @@ int 	apply_alias(t_parse *parse)
 
 	if (!parse || !parse->content)
 		return (1);
-	if (ft_strlen(parse->content) <= 1)
+	if (ft_strlen(parse->content) <= 1 && parse->space)
 		return (0);
 	value = find_key(parse->content + 1);
 	value = value && ft_strcmp(parse->content, "$?") ? ft_strdup(value) : value;

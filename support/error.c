@@ -37,7 +37,6 @@ int ft_syntax_error(t_parse *head)
 
 int	ft_error(char *mess, char *mess2, int status)
 {
-	dprintf(2, "erreur, pid = %d\n", getpid());
 	write(2, "minishell: ", ft_strlen("minishell: "));
 	write(2, mess, ft_strlen(mess));
 	if (mess2)
