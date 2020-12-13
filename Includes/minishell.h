@@ -72,7 +72,7 @@ typedef	struct	s_cmd
 *** builtin.c
 */
 
-void	ft_pwd();
+int 	ft_pwd();
 
 void	ft_exit(t_parse *commands);
 

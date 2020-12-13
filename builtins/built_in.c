@@ -1,14 +1,13 @@
 #include "minishell.h"
 
-void	ft_pwd()
+int	ft_pwd()
 {
-	char *pwd;
+	char	buff[1024];
 
-	pwd = find_key("PWD");
-	if (!pwd)
-		return;
-	write(1, pwd, ft_strlen(pwd));
+	getcwd(buff, 1024);
+	write(1, buff, ft_strlen(buff));
 	write(1, "\n", 1);
+	return (0);
 }
 
 
@@ -30,7 +29,7 @@ void	ft_exit(t_parse *commands)
 				exit(255);
 			}
 		}
-		num = ft_atoi(commands->next->content);
+		num = (unsigned char)ft_atoi(commands->next->content);
 	}
 	else
 		num = g_status >> 8;
@@ -42,6 +41,7 @@ void	ft_exit(t_parse *commands)
 ***Renvoie vers le bon built in.
 ***Renvoie 0 si un builtin est détecté
 ***1 sinon
+*** Modifier pour renvoyer le retour des builtins, qui correspondra lui-même à g_status
 */
 
 int		ft_check_built_in(t_parse *head)
@@ -50,19 +50,19 @@ int		ft_check_built_in(t_parse *head)
 		return (1);
 
 	if (!ft_strcmp("cd", head->content))
-		ft_cd(head->next);
+		g_status = ft_cd(head->next) << 8;
 	else if (!ft_strcmp("export", head->content))
-		ft_export(head->next);
+		g_status = ft_export(head->next) << 8;
 	else if (!ft_strcmp("unset", head->content))
-		ft_unset(head->next);
+		g_status = ft_unset(head->next) << 8;
 	else if (!ft_strcmp("echo", head->content))
-		ft_echo(head->next);
+		g_status = ft_echo(head->next) << 8;
 	else if (!ft_strcmp("exit", head->content))
 		ft_exit(head);
 	else if (!ft_strcmp("env", head->content))
-		ft_print_env();
+		g_status = ft_print_env() << 8;
 	else if (!ft_strcmp("pwd", head->content))
-		ft_pwd();
+		g_status = ft_pwd() << 8;
 	else
 		return (1);
 	return (0);

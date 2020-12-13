@@ -47,13 +47,13 @@ t_parse *set_parse(char *str, int i, t_parse *current)
 	t_parse *next;
 
 	next = current;
-	if (ft_strrchr("\t \n\v\f\r", str[i]) && !current->type)
-		next->space = 1;
 	if (i > next->prev + 1 || next->type == str[i])
 	{
 		next->content = ft_strndup(str + next->prev + 1, i - next->prev - 1);
 		next = create_parse(next, NULL, 0, 0, 0);
 	}
+	if (ft_strrchr("\t \n\v\f\r", str[i]))
+		next->previous->space = 1;
 	next->alias = (str[i] == '$') ? 1 : 0;
 	next->prev = i - next->alias;
 	if (ft_strrchr("\'\"", str[i]) && current->type != str[i])

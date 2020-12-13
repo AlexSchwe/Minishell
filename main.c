@@ -9,11 +9,11 @@ int	exec_cmd(t_parse *head)
 {
 	pid_t pid;
 
-	g_status = 0;
 	if (!head || !head->content)
 		return (0);
 	if (!ft_check_built_in(head))
 		return (0);
+	g_status = 0;
 	pid = fork();
 	if (pid == -1)
 		ft_error(strerror(errno), "", 1);
@@ -90,14 +90,14 @@ int		main(int argc, char **argv, char **env)
 
 	set_env(env);
 	signal_set_up(&ft_handle_signal);
-	ft_prompt();
+//	ft_prompt();
 
 	while (get_next_line(0, &line))
 	{
 		signal_set_up(&ft_handle_signal_child);
 		minishell(line);
 		free(line);
-		ft_prompt();
+//		ft_prompt();
 		signal_set_up(&ft_handle_signal);
 	}
 	return (ft_eof());
