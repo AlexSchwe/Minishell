@@ -6,17 +6,17 @@ int ft_export_error(t_env *env)
 
 	i = -1;
 	if (!env)
-		return (!ft_error("export: not a valid identifier: ", "\0", 1));
-	if (!env->key)
+		return (!ft_error("export: not a valid identifier", "\0", 1));
+	if (!env->key || !ft_strlen(env->key))
 	{
 		delete_env(env);
-		return (!ft_error("export: not a valid identifier: ", "\0", 1));
+		return (!ft_error("export: not a valid identifier", "\0", 1));
 	}
 	while (env->key[++i])
 	{
 		if (!ft_isalnum(env->key[i]) && env->key[i] != '_')
 		{
-			ft_error("export: not a valid identifier: ", env->key, 1);
+			ft_error("export: not a valid identifier", env->key, 1);
 			delete_env(env);
 		}
 	}
