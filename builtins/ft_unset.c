@@ -10,10 +10,12 @@ int	ft_unset(t_parse *cmds)
 	t_env	*env;
 	char *command;
 
-	if (!cmds || !cmds->content)
+	if (!cmds)
 		return (0);
 	command = cmds->content;
 	i = -1;
+	if (!cmds->content || !ft_strlen(cmds->content))
+		return (!ft_error("unset not a valid identifier", "", 1));
 	while (command[++i])
 		if (!(ft_isalnum(command[i])) && command[i] != '/' && command[i] != '_'
 		&& command[i] != '-' && command[i] != '.')
@@ -26,5 +28,5 @@ int	ft_unset(t_parse *cmds)
 			return (delete_env(env));
 		env = env->next;
 	}
-	return (1);
+	return (0);
 }

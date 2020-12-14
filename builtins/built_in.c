@@ -20,6 +20,8 @@ void	ft_exit(t_parse *commands)
 	ft_free_env(g_env_head);
 	if (commands->next && commands->next->content)
 	{
+		if (commands->next->content[i + 1] == '-')
+			i++;
 		while (commands->next->content[++i])
 		{
 			if (commands->next->content[i] < '0' || commands->next->content[i] > '9')
