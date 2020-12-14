@@ -29,7 +29,7 @@ function exec_test()
 	#TEST1=$(echo $@ "; exit" | ./minishell 2>&-) #original
 	TEST1=$(echo $@ "; exit" 2>&-| ./minishell  )
 	ES_1=$?
-	TEST1=$(A=$TEST1; echo "$TEST1" | head -n1 | cut -d " " -f2-; echo "$A" | tail -n+2)
+	#TEST1=$(A=$TEST1; echo "$TEST1" | head -n1 | cut -d " " -f2-; echo "$A" | tail -n+2)
 	TEST2=$(echo $@ "; exit" | bash 2>&-)
 	ES_2=$?
 	if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then

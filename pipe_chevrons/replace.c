@@ -16,7 +16,7 @@ int double_quote(t_parse *parse)
 		return (1);
 	while (str[++i])
 	{
-		if (str[i] == '\\' && str[i + 1] && !ft_strchr("\\\"$~\n", str[i + 1]))
+		if (str[i] == '\\' && str[i + 1] && ft_strchr("\\\"$~\n", str[i + 1]))
 			i++;
 		dest[++j] = str[i];
 	}
@@ -65,7 +65,10 @@ t_parse *alias_to_parser(char *str)
 	head = set_head_parser();
 	current = head->next;
 	while (str[i] && ft_strrchr("\t \n\v\f\r", str[i]))
+	{
+		head->space = 1;
 		i++;
+	}
 	prev = i--;
 	while (str[++i])
 	{
@@ -105,6 +108,8 @@ int 	apply_alias(t_parse *parse)
 	free(value);
 	if (!new)
 		return (0);
+	if (!parse->previous->space)
+		parse->previous->space = new->space;
 	parse->content = ft_strdup(new->next->content);
 	if (new->next->next)
 		insert_list(parse, dup_list(new->next->next));

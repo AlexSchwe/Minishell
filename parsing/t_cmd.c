@@ -14,11 +14,11 @@ int	close_pipe_before(t_cmd *cmd)
 	if ((close(current->pipes[0]) < 0))
 		ft_error(strerror(errno), "|", 1);
 	current = current->previous;
-	if (!current)
+	if (!current || current->type != '|')
 		return (0);
 	if ((close(current->pipes[1]) < 0))
 		ft_error(strerror(errno), "|", 1);
-	while (current->previous != NULL)
+	while (current->previous != NULL && current->previous->type == '|')
 	{
 		current = current->previous;
 		if ((close(current->pipes[0]) < 0))

@@ -89,7 +89,7 @@ t_parse *cmd_to_parser(char *str)
 			current = set_parse(str, i, current);
 		else if (current->alias && !ft_isalnum(str[i]) &&  str[i] != '_')
 			current = set_parse_alias(str, i, current);
-		else if (str[i] == '\\' && current->type != '\'')
+		if (str[i] == '\\' && current->type != '\'')
 			i++;
 	}
 	set_tail(str, i, current);
