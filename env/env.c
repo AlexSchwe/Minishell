@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:32:49 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/23 15:04:51 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_env *last(t_env *head)
+t_env	*last(t_env *head)
 {
 	t_env *next;
 
@@ -10,12 +22,12 @@ t_env *last(t_env *head)
 	return (next);
 }
 
-t_env *create_env_str(char *env)
+t_env	*create_env_str(char *env)
 {
-	int pos;
-	char *key;
-	char *value;
-	t_env *dest;
+	int		pos;
+	char	*key;
+	char	*value;
+	t_env	*dest;
 
 	if (!ft_strchr(env, '='))
 		return (NULL);
@@ -28,26 +40,26 @@ t_env *create_env_str(char *env)
 	return (dest);
 }
 
-int insert_last(t_env *new)
+int		insert_last(t_env *new)
 {
 	return (insert_env(last(g_env_head), new));
 }
+
 /*
 **ajoute une variable d'environnement
 */
 
-int	ft_add_envv(char *command)
+int		ft_add_envv(char *command)
 {
 	t_env *new;
 
 	new = create_env_str(command);
-
 	if (!new)
 		return (1);
 	return (insert_last(new));
 }
 
-int set_env(char **env)
+int		set_env(char **env)
 {
 	int i;
 

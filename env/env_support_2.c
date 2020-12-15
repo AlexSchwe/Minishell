@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_support_2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:32:49 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/23 15:04:51 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int len_env()
+int		len_env(void)
 {
-	t_env *current;
-	int i;
+	t_env	*current;
+	int		i;
 
 	i = 0;
 	current = g_env_head->next;
@@ -15,13 +27,13 @@ int len_env()
 	return (i);
 }
 
-char *env_to_str(t_env *env)
+char	*env_to_str(t_env *env)
 {
 	char *tmp;
 	char *dest;
 
 	if (!env->key)
-		return(NULL);
+		return (NULL);
 	tmp = ft_strjoin(env->key, "=");
 	if (!env->value)
 		return (tmp);
@@ -30,11 +42,11 @@ char *env_to_str(t_env *env)
 	return (dest);
 }
 
-char **array_env()
+char	**array_env(void)
 {
-	int i;
-	char **dest;
-	t_env *env;
+	int		i;
+	char	**dest;
+	t_env	*env;
 
 	dest = malloc((len_env() + 1) * sizeof(char*));
 	i = -1;
@@ -48,7 +60,7 @@ char **array_env()
 	return (dest);
 }
 
-t_env *find_env(char *key)
+t_env	*find_env(char *key)
 {
 	t_env *env;
 
@@ -62,7 +74,7 @@ t_env *find_env(char *key)
 	return (NULL);
 }
 
-void export_env(char *key, char *value)
+void	export_env(char *key, char *value)
 {
 	t_env *env;
 
@@ -76,19 +88,5 @@ void export_env(char *key, char *value)
 	{
 		env = create_env(key, value);
 		insert_last(env);
-	}
-}
-
-void ft_free_env()
-{
-	t_env *env;
-	t_env *prev;
-
-	env = g_env_head;
-	while (env)
-	{
-		prev = env;
-		env = env->next;
-		delete_env(prev);
 	}
 }

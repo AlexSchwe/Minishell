@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   support2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:36:02 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/29 21:43:26 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int		file_transfer(int fds, int fdd)
@@ -14,14 +26,15 @@ int		file_transfer(int fds, int fdd)
 	return (0);
 }
 
-int 	merge_cmds(t_parse *head)
+int		merge_cmds(t_parse *head)
 {
 	t_parse *current;
 
 	current = head->next;
 	while (current)
 	{
-		if (!current->type && (!current->content || !ft_strlen(current->content)))
+		if (!current->type && (!current->content
+		|| !ft_strlen(current->content)))
 			current = delete_parser(current);
 		else if (!current->space && current->next)
 		{

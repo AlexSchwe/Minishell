@@ -1,32 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chevron.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:35:01 by alexandre         #+#    #+#             */
+/*   Updated: 2020/11/08 04:07:56 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
 *** Remplace stdin par le contenu du fichier donné en argument
 */
 
-int ft_stdin(int fd)
+int		ft_stdin(int fd)
 {
 	int		pip[2];
 
 	pipe(pip);
 	if ((dup2(pip[0], STDIN_FILENO)) == -1)
-		return(1);
-
+		return (1);
 	if (close(pip[0]))
 		return (1);
 	if (file_transfer(fd, pip[1]))
 		return (1);
 	if (close(pip[1]))
-		return(1);
+		return (1);
 	return (0);
 }
 
-
-int alias_chevron(t_parse *parse)
+int		alias_chevron(t_parse *parse)
 {
-	char *value;
-	t_parse *new;
-	int len;
+	char	*value;
+	t_parse	*new;
+	int		len;
 
 	value = find_key(parse->content + 1);
 	if (!value)
@@ -46,7 +56,7 @@ int alias_chevron(t_parse *parse)
 *** gère les alias immédiatemment après les chevrons
 */
 
-int merge_after_chevron(t_parse *parse)
+int		merge_after_chevron(t_parse *parse)
 {
 	if (!parse)
 		return (0);
@@ -56,7 +66,7 @@ int merge_after_chevron(t_parse *parse)
 	{
 		if (parse->next->alias)
 			if (alias_chevron(parse->next))
-				return (1);		
+				return (1);
 		merge_parse(parse, parse->next);
 	}
 	return (0);
@@ -67,10 +77,10 @@ int merge_after_chevron(t_parse *parse)
 *** redirige stdout ou bien renvoie vers stdin
 */
 
-t_parse *apply_chevron(t_parse *parse, int *error)
+t_parse	*apply_chevron(t_parse *parse, int *error)
 {
-	int fd;
-	char *file;
+	int		fd;
+	char	*file;
 
 	if (merge_after_chevron(parse->next))
 	{
@@ -100,12 +110,12 @@ t_parse *apply_chevron(t_parse *parse, int *error)
 *** détecte les erreur
 */
 
-int 	ft_chevron(t_parse *head)
+int		ft_chevron(t_parse *head)
 {
-	t_parse *current;
-	current = head->next;
-	int error;
+	t_parse	*current;
+	int		error;
 
+	current = head->next;
 	error = 0;
 	while (current)
 	{

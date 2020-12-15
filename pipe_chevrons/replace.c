@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   replace.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:35:01 by alexandre         #+#    #+#             */
+/*   Updated: 2020/11/08 04:07:56 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int double_quote(t_parse *parse)
+int		double_quote(t_parse *parse)
 {
-	int i;
-	int j;
-	char *dest;
-	char *str;
+	int		i;
+	int		j;
+	char	*dest;
+	char	*str;
 
 	str = parse->content;
 	if (!parse || !parse->content)
@@ -26,12 +38,12 @@ int double_quote(t_parse *parse)
 	return (0);
 }
 
-int apply_parse(t_parse *parse)
+int		apply_parse(t_parse *parse)
 {
-	int i;
-	int j;
-	char *dest;
-	char *str;
+	int		i;
+	int		j;
+	char	*dest;
+	char	*str;
 
 	str = parse->content;
 	if (!parse || !parse->content)
@@ -52,12 +64,12 @@ int apply_parse(t_parse *parse)
 	return (0);
 }
 
-t_parse *alias_to_parser(char *str)
+t_parse	*alias_to_parser(char *str)
 {
-	int i;
-	int prev;
-	t_parse *current;
-	t_parse *head;
+	int		i;
+	int		prev;
+	t_parse	*current;
+	t_parse	*head;
 
 	i = 0;
 	if (!str)
@@ -87,9 +99,9 @@ t_parse *alias_to_parser(char *str)
 	return (head);
 }
 
-int 	apply_alias(t_parse *parse)
+int		apply_alias(t_parse *parse)
 {
-	char *value;
+	char	*value;
 	t_parse *new;
 
 	if (!parse || !parse->content)
@@ -117,7 +129,7 @@ int 	apply_alias(t_parse *parse)
 	return (0);
 }
 
-int ft_replace(t_parse *head)
+int		ft_replace(t_parse *head)
 {
 	t_parse *parse;
 

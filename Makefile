@@ -23,6 +23,7 @@ SRC		=	builtins/built_in.c \
 			builtins/echo.c \
 			env/env.c \
 			env/env_support_2.c	\
+			env/env_support_3.c	\
 			support/error.c \
 			builtins/export.c \
 			builtins/export_p.c \

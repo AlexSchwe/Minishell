@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:32:49 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/23 15:04:51 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int ft_export_error(t_env *env)
+int	ft_export_error(t_env *env)
 {
 	int i;
 
@@ -23,12 +35,13 @@ int ft_export_error(t_env *env)
 	return (0);
 }
 
-int ft_export(t_parse *parse)
+int	ft_export(t_parse *parse)
 {
 	t_env *env;
 	t_env *prev;
 
-	if (!parse || !parse->content || (parse->content && !ft_strcmp(parse->content, "-p")))
+	if (!parse || !parse->content ||
+	(parse->content && !ft_strcmp(parse->content, "-p")))
 		return (export_p());
 	env = create_env_str(parse->content);
 	if (ft_export_error(env))

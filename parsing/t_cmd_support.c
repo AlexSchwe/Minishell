@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_cmd_support.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:35:01 by alexandre         #+#    #+#             */
+/*   Updated: 2020/11/08 04:07:56 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
 *** Renvoie la taille de la suite de commande séparées par des pipes
 */
 
-int len_pipe(t_cmd *head)
+int		len_pipe(t_cmd *head)
 {
-	int i;
-	t_cmd *node;
+	int		i;
+	t_cmd	*node;
 
 	node = head;
 	i = 0;
@@ -29,7 +41,7 @@ void	set_previous(t_cmd *head)
 	t_cmd *previous;
 
 	if (!head)
-		return;
+		return ;
 	current = head->next;
 	previous = head;
 	previous->previous = NULL;
@@ -45,7 +57,7 @@ void	set_previous(t_cmd *head)
 *** Libère la liste
 */
 
-void free_cmd(t_cmd *head)
+void	free_cmd(t_cmd *head)
 {
 	t_cmd *current;
 	t_cmd *previous;

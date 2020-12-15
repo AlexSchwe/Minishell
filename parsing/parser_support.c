@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_support.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:35:01 by alexandre         #+#    #+#             */
+/*   Updated: 2020/11/08 04:07:56 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int len_parse(t_parse *parse)
+int		len_parse(t_parse *parse)
 {
 	int dest;
 
@@ -19,7 +31,7 @@ t_parse	*delete_parser(t_parse *current)
 	t_parse *next;
 
 	if (!current)
-		return NULL;
+		return (NULL);
 	next = current->next;
 	if (current->previous)
 		current->previous->next = current->next;
@@ -31,7 +43,7 @@ t_parse	*delete_parser(t_parse *current)
 	return (next);
 }
 
-int	free_parser(t_parse *head)
+int		free_parser(t_parse *head)
 {
 	t_parse *parser;
 	t_parse *previous;
@@ -45,20 +57,20 @@ int	free_parser(t_parse *head)
 		parser = parser->next;
 		free(previous);
 	}
-return (0);
+	return (0);
 }
 
-int merge_parse(t_parse *first, t_parse *second)
+int		merge_parse(t_parse *first, t_parse *second)
 {
 	char *content;
 
-	if (!first || ! second)
+	if (!first || !second)
 		return (0);
 	if (!first->content)
 		content = ft_strdup(second->content);
 	else if (!second->content)
 		content = first->content;
-	else 
+	else
 	{
 		content = ft_strjoin(first->content, second->content);
 		free(first->content);
@@ -70,16 +82,17 @@ int merge_parse(t_parse *first, t_parse *second)
 	return (0);
 }
 
-int merge_chevron(t_parse *head)
+int		merge_chevron(t_parse *head)
 {
 	t_parse *current;
-	int i;
+	int		i;
 
 	current = head->next;
 	i = 0;
 	while (current && current->next)
 	{
-		if (!ft_strcmp(current->content, ">") && !ft_strcmp(current->next->content, ">"))
+		if (!ft_strcmp(current->content, ">") &&
+		!ft_strcmp(current->next->content, ">"))
 			if (!current->type && !current->next->type)
 				if (!current->space)
 					i = !(merge_parse(current, current->next));

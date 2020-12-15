@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_p.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:32:49 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/23 15:04:51 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void set_alpha()
+void	set_alpha(void)
 {
 	t_env *env;
 
@@ -12,16 +24,15 @@ void set_alpha()
 	}
 }
 
-void ft_swap_alpha(t_env *preva, t_env *a, t_env *b)
+void	ft_swap_alpha(t_env *preva, t_env *a, t_env *b)
 {
-
 	if (preva)
 		preva->next_alpha = b;
 	a->next_alpha = b->next_alpha;
 	b->next_alpha = a;
 }
 
-int tri_env(void)
+int		tri_env(void)
 {
 	t_env *env;
 	t_env *prev;
@@ -33,7 +44,6 @@ int tri_env(void)
 	{
 		if (ft_strcmp(env->key, env->next_alpha->key) > 0)
 		{
-
 			ft_swap_alpha(prev, env, env->next_alpha);
 			prev = g_env_head;
 			env = g_env_head->next_alpha;
@@ -47,7 +57,7 @@ int tri_env(void)
 	return (0);
 }
 
-int 	export_p()
+int		export_p(void)
 {
 	t_env *env;
 

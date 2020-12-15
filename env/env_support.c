@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_support.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:32:49 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/23 15:04:51 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char *find_key(char *str)
+char	*find_key(char *str)
 {
 	t_env *env;
 
@@ -29,7 +41,7 @@ t_env	*create_env(char *key, char *value)
 	return (dest);
 }
 
-int	ft_print_env()
+int		ft_print_env(void)
 {
 	t_env *env;
 
@@ -49,7 +61,7 @@ int	ft_print_env()
 	return (0);
 }
 
-int	insert_env(t_env *first, t_env *new)
+int		insert_env(t_env *first, t_env *new)
 {
 	if (!first || !new)
 		return (1);
@@ -57,10 +69,10 @@ int	insert_env(t_env *first, t_env *new)
 		first->next->previous = new;
 	first->next = new;
 	new->previous = first;
-	return (0); 
+	return (0);
 }
 
-int	delete_env(t_env *env)
+int		delete_env(t_env *env)
 {
 	if (env->next)
 		env->next->previous = env->previous;

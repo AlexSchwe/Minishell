@@ -14,7 +14,6 @@
 
 void	ft_execve(char *file, char **commands, char *exec)
 {
-	(void)exec;
 	char **env;
 
 	env = array_env();

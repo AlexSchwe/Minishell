@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:32:49 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/23 15:04:51 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	ft_pwd()
+int		ft_pwd(void)
 {
 	char	buff[1024];
 
@@ -9,7 +21,6 @@ int	ft_pwd()
 	write(1, "\n", 1);
 	return (0);
 }
-
 
 void	ft_exit(t_parse *commands)
 {
@@ -24,9 +35,10 @@ void	ft_exit(t_parse *commands)
 			i++;
 		while (commands->next->content[++i])
 		{
-			if (commands->next->content[i] < '0' || commands->next->content[i] > '9')
+			if (!ft_isdigit(commands->next->content[i] < '0'))
 			{
-				ft_error("exit: numeric argument required", commands->content, 2);
+				ft_error("exit: numeric argument required",
+				commands->content, 2);
 				free_parser(commands);
 				exit(255);
 			}
@@ -43,14 +55,12 @@ void	ft_exit(t_parse *commands)
 ***Renvoie vers le bon built in.
 ***Renvoie 0 si un builtin est détecté
 ***1 sinon
-*** Modifier pour renvoyer le retour des builtins, qui correspondra lui-même à g_status
 */
 
 int		ft_check_built_in(t_parse *head)
 {
 	if (!head->content)
 		return (1);
-
 	if (!ft_strcmp("cd", head->content))
 		g_status = ft_cd(head->next) << 8;
 	else if (!ft_strcmp("export", head->content))

@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexandreschwerer <marvin@42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:32:49 by alexandre         #+#    #+#             */
+/*   Updated: 2020/10/23 15:04:51 by alexandre        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
-*** détecte et renvoie vers les built-ins 
+*** détecte et renvoie vers les built-ins
 *** ou executables pertinents
 */
 
-int	exec_cmd(t_parse *head)
+int		exec_cmd(t_parse *head)
 {
 	pid_t pid;
 
@@ -27,17 +39,18 @@ int	exec_cmd(t_parse *head)
 /*
 *** save stdin and stdout
 *** apply ft_replace, which replaces ">", "<" and "$"
-*** and exec 
+*** and exec
 */
 
-int	launch_cmd(t_parse *head)
+int		launch_cmd(t_parse *head)
 {
 	int ret;
 	int defout;
 	int defin;
 
-	if ((defout = dup(STDOUT_FILENO)) < 0 || (defin = dup(STDIN_FILENO)) < 0)
-			ft_error(strerror(errno), "", 1);
+	if ((defout = dup(STDOUT_FILENO)) < 0 ||
+	(defin = dup(STDIN_FILENO)) < 0)
+		ft_error(strerror(errno), "", 1);
 	if (!ft_replace(head))
 		ret = exec_cmd(head->next);
 	else
@@ -52,12 +65,14 @@ int	launch_cmd(t_parse *head)
 *** en fonction des pipes (sous forme de t_cmd)
 */
 
-int	minishell(char *line)
+int		minishell(char *line)
 {
-	t_parse *parser;
-	t_cmd *head;
-	t_cmd *cmd;
+	t_parse	*parser;
+	t_cmd	*head;
+	t_cmd	*cmd;
 
+	if (!line)
+		return (0);
 	parser = cmd_to_parser(line);
 	if (ft_syntax_error(parser))
 		return (!(free_parser(parser)));
@@ -85,19 +100,18 @@ void	ft_prompt(void)
 int		main(int argc, char **argv, char **env)
 {
 	char *line;
+
 	(void)argc;
 	(void)argv;
-
 	set_env(env);
 	signal_set_up(&ft_handle_signal);
-//	ft_prompt();
-
+	ft_prompt();
 	while (get_next_line(0, &line))
 	{
 		signal_set_up(&ft_handle_signal_child);
 		minishell(line);
 		free(line);
-//		ft_prompt();
+		ft_prompt();
 		signal_set_up(&ft_handle_signal);
 	}
 	return (ft_eof());

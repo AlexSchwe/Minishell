@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_cmd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:35:01 by alexandre         #+#    #+#             */
+/*   Updated: 2020/11/08 04:07:56 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
 ** Ferme tous les pipes précédents
 */
 
-int	close_pipe_before(t_cmd *cmd)
+int		close_pipe_before(t_cmd *cmd)
 {
 	t_cmd *current;
 
@@ -33,10 +45,10 @@ int	close_pipe_before(t_cmd *cmd)
 ** Ferme tous les pipes
 */
 
-int	close_pipe(t_cmd *head)
+int		close_pipe(t_cmd *head)
 {
-	t_cmd *current;
-	int i;
+	t_cmd	*current;
+	int		i;
 
 	current = head;
 	i = -1;
@@ -51,7 +63,7 @@ int	close_pipe(t_cmd *head)
 	return (0);
 }
 
-void print_list(t_cmd *head)
+void	print_list(t_cmd *head)
 {
 	t_cmd *node;
 
@@ -66,12 +78,12 @@ void print_list(t_cmd *head)
 	}
 }
 
-t_cmd *create_cmd(t_parse *head, t_cmd *prev)
+t_cmd	*create_cmd(t_parse *head, t_cmd *prev)
 {
 	t_cmd *dest;
 
 	if (!(dest = malloc(sizeof(struct s_cmd))))
-				return (NULL);
+		return (NULL);
 	dest->head = head;
 	dest->type = 0;
 	dest->previous = prev;
@@ -79,12 +91,12 @@ t_cmd *create_cmd(t_parse *head, t_cmd *prev)
 	return (dest);
 }
 
-t_cmd *set_list(t_parse *head)
+t_cmd	*set_list(t_parse *head)
 {
-	t_parse *next;
-	t_cmd *new_head;
-	t_cmd *next_lst;
-	
+	t_parse	*next;
+	t_cmd	*new_head;
+	t_cmd	*next_lst;
+
 	next = head->next;
 	new_head = create_cmd(head, NULL);
 	next_lst = new_head;

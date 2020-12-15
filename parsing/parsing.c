@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:35:01 by alexandre         #+#    #+#             */
+/*   Updated: 2020/11/08 04:07:56 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_parse *set_head_parser()
+t_parse	*set_head_parser(void)
 {
 	t_parse *head;
 
@@ -11,28 +23,27 @@ t_parse *set_head_parser()
 	return (head);
 }
 
-/*
-***Découpe en plusieurs mots en fonction des guillemets
-*/
 void	set_tail(char *str, int i, t_parse *current)
 {
 	if (!current)
-		return;
+		return ;
 	if (i > current->prev + 1)
-		current->content = ft_strndup(str + current->prev + 1, i - current->prev - 1);
+		current->content = ft_strndup(str + current->prev + 1,
+		i - current->prev - 1);
 	else
 		delete_parser(current);
 }
 
-t_parse *set_parse_alias(char *str, int i, t_parse *current)
+t_parse	*set_parse_alias(char *str, int i, t_parse *current)
 {
-	t_parse *next;
-	int status;
+	t_parse	*next;
+	int		status;
 
 	next = current;
 	status = (str[i] == '?') ? 1 : 0;
 	next->space = ft_strrchr("\t \n\v\f\r", str[i]) ? 1 : 0;
-	next->content = ft_strndup(str + next->prev + 1, i - next->prev - 1 + status);
+	next->content = ft_strndup(str + next->prev + 1,
+	i - next->prev - 1 + status);
 	next = create_parse(next, NULL, 0, 0, 0);
 	next->prev = i - 1 + status;
 	next->alias = (str[i] == '$') ? 1 : 0;
@@ -42,7 +53,7 @@ t_parse *set_parse_alias(char *str, int i, t_parse *current)
 	return (next);
 }
 
-t_parse *set_parse(char *str, int i, t_parse *current)
+t_parse	*set_parse(char *str, int i, t_parse *current)
 {
 	t_parse *next;
 
@@ -67,27 +78,25 @@ t_parse *set_parse(char *str, int i, t_parse *current)
 	return (next);
 }
 
-t_parse *cmd_to_parser(char *str)
+t_parse	*cmd_to_parser(char *str)
 {
-	int i;
-	t_parse *current;
-	t_parse *head;
+	int		i;
+	t_parse	*current;
+	t_parse	*head;
 
-	if (!str)
-		return (NULL);
 	i = -1;
 	head = set_head_parser();
 	current = head->next;
 	while (str[++i])
 	{
-		if (ft_strrchr("\'\"\t \n\v\f\r", str[i]) && 
+		if (ft_strrchr("\'\"\t \n\v\f\r", str[i]) &&
 		(!current->type || current->type == str[i]))
 			current = set_parse(str, i, current);
-		else if(ft_strrchr("><|;", str[i]) && !current->type)
+		else if (ft_strrchr("><|;", str[i]) && !current->type)
 			current = set_parse(str, i, current);
 		else if (str[i] == '$' && current->type != '\'')
 			current = set_parse(str, i, current);
-		else if (current->alias && !ft_isalnum(str[i]) &&  str[i] != '_')
+		else if (current->alias && !ft_isalnum(str[i]) && str[i] != '_')
 			current = set_parse_alias(str, i, current);
 		if (str[i] == '\\' && current->type != '\'')
 			i++;

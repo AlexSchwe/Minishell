@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 10:35:01 by alexandre         #+#    #+#             */
+/*   Updated: 2020/11/08 04:07:56 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int					redir_node(t_cmd *cmd, pid_t *pid, int i)
+int		redir_node(t_cmd *cmd, pid_t *pid, int i)
 {
 	pipe(cmd->pipes);
 	pid[i] = fork();
@@ -9,10 +21,10 @@ int					redir_node(t_cmd *cmd, pid_t *pid, int i)
 	if (pid[i] == 0)
 	{
 		close_pipe_before(cmd);
-		if (cmd->previous && cmd->previous->type == '|' && 
+		if (cmd->previous && cmd->previous->type == '|' &&
 		dup2(cmd->previous->pipes[0], 0) < 0)
 			return (!ft_error(strerror(errno), "|", 1));
-		if (cmd->type == '|' && dup2(cmd->pipes[1], 1) < 0) //&& cmd_type == '|'
+		if (cmd->type == '|' && dup2(cmd->pipes[1], 1) < 0)
 			return (!ft_error(strerror(errno), "|", 1));
 		launch_cmd(cmd->head);
 		if ((close(cmd->pipes[1]) < 0))
@@ -25,7 +37,7 @@ int					redir_node(t_cmd *cmd, pid_t *pid, int i)
 	return (0);
 }
 
-t_cmd *launch_pipe(t_cmd *current, pid_t *pid)
+t_cmd	*launch_pipe(t_cmd *current, pid_t *pid)
 {
 	int i;
 
@@ -45,7 +57,7 @@ t_cmd *launch_pipe(t_cmd *current, pid_t *pid)
 ** Ferme les pipes à la fin
 */
 
-int					redir_cmds(t_cmd *head)
+int		redir_cmds(t_cmd *head)
 {
 	t_cmd	*current;
 	pid_t	*pid;

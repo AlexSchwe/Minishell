@@ -21,7 +21,6 @@ int		ft_cd(t_parse *cmds)
 		path = cmds->content;
 	else
 		path = NULL;
-
 	if (!(path))
 		path = find_key("HOME");
 	if (!(path))
