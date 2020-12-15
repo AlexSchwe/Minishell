@@ -26,6 +26,8 @@ int		ft_cd(t_parse *cmds)
 		path = find_key("HOME");
 	if (!(path))
 		return (!ft_error("cd", "HOME not set", 1));
+	if (!ft_strlen(path))
+		return (0);
 	if (chdir(path))
 		return (!(ft_error("cd", strerror(errno), 1)));
 	getcwd(buff, 1024);
