@@ -28,10 +28,8 @@ int ft_export(t_parse *parse)
 	t_env *env;
 	t_env *prev;
 
-	if (!parse || !parse->content)
-		return (ft_print_env());
-	if (parse->content && !ft_strcmp(parse->content, "-p"))
-		export_p();
+	if (!parse || !parse->content || (parse->content && !ft_strcmp(parse->content, "-p")))
+		return (export_p());
 	env = create_env_str(parse->content);
 	if (ft_export_error(env))
 		return (1);

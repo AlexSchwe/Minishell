@@ -66,6 +66,7 @@ int 	export_p()
 			write(1, env->value, ft_strlen(env->value));
 			write(1, "\"", 1);
 		}
+		write(1, "\n", 1);
 		env = env->next_alpha;
 	}
 	return (0);
