@@ -24,7 +24,7 @@ int	is_redir(char *str)
 int	ft_syntax_error(t_parse *head)
 {
 	t_parse	*new;
-	
+
 	new = head->next;
 	if (!new)
 		return (0);

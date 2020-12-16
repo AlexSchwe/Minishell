@@ -80,15 +80,14 @@ t_parse	*alias_to_parser(char *str)
 		head->space = 1;
 	prev = i--;
 	while (str[++i])
-	{
 		if (ft_strrchr("\t \n\v\f\r", str[i]))
 		{
-			if ((i > prev) && (current->content = ft_strndup(str + prev, i - prev)))
+			if ((i > prev) &&
+			(current->content = ft_strndup(str + prev, i - prev)))
 				current = create_parse(current, NULL, 0, 0);
 			current->space = 1;
 			prev = i + 1;
 		}
-	}
 	current->content = ft_strndup(str + prev, i - prev);
 	return (head);
 }
