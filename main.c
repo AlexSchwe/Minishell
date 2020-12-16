@@ -94,7 +94,7 @@ int		minishell(char *line)
 
 void	ft_prompt(void)
 {
-	write(1, "minishell$", 10);
+	//write(1, "minishell$", 10);
 }
 
 int		main(int argc, char **argv, char **env)

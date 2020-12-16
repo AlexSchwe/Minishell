@@ -54,9 +54,10 @@ t_parse	*dup_parse(t_parse *parse)
 	t_parse *dest;
 
 	if (!(dest = create_parse(NULL, ft_strdup(parse->content), parse->alias,
-	parse->prev, parse->space)))
+	parse->prev)))
 		return (NULL);
 	dest->type = parse->type;
+	dest->space = parse->space;
 	return (dest);
 }
 

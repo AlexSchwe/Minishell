@@ -234,7 +234,7 @@ int len_parse(t_parse *parse);
 
 char **parse_to_char(t_parse *parse);
 
-t_parse *create_parse(t_parse *current, char *content, int alias, int prev, int space);
+t_parse *create_parse(t_parse *current, char *content, int alias, int prev);
 
 void print_parser(t_parse *head);
 

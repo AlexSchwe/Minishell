@@ -16,9 +16,9 @@ t_parse	*set_head_parser(void)
 {
 	t_parse *head;
 
-	head = create_parse(NULL, NULL, 0, 0, 0);
+	head = create_parse(NULL, NULL, 0, 0);
 	head->type = 0;
-	head->next = create_parse(head, NULL, 0, -1, 0);
+	head->next = create_parse(head, NULL, 0, -1);
 	head->next->type = 0;
 	return (head);
 }
@@ -44,7 +44,7 @@ t_parse	*set_parse_alias(char *str, int i, t_parse *current)
 	next->space = ft_strrchr("\t \n\v\f\r", str[i]) ? 1 : 0;
 	next->content = ft_strndup(str + next->prev + 1,
 	i - next->prev - 1 + status);
-	next = create_parse(next, NULL, 0, 0, 0);
+	next = create_parse(next, NULL, 0, 0);
 	next->prev = i - 1 + status;
 	next->alias = (str[i] == '$') ? 1 : 0;
 	if (ft_strrchr("\'\"", str[i]) && current->type != str[i])
@@ -61,7 +61,7 @@ t_parse	*set_parse(char *str, int i, t_parse *current)
 	if (i > next->prev + 1 || next->type == str[i])
 	{
 		next->content = ft_strndup(str + next->prev + 1, i - next->prev - 1);
-		next = create_parse(next, NULL, 0, 0, 0);
+		next = create_parse(next, NULL, 0, 0);
 	}
 	if (ft_strrchr("\t \n\v\f\r", str[i]))
 		next->previous->space = 1;
@@ -73,7 +73,7 @@ t_parse	*set_parse(char *str, int i, t_parse *current)
 	if (ft_strrchr("><|;", str[i]))
 	{
 		next->content = ft_strndup(&str[i], 1);
-		next = create_parse(next, NULL, 0, i, 0);
+		next = create_parse(next, NULL, 0, i);
 	}
 	return (next);
 }

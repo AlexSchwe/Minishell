@@ -35,7 +35,7 @@ void	ft_exit(t_parse *commands)
 			i++;
 		while (commands->next->content[++i])
 		{
-			if (!ft_isdigit(commands->next->content[i] < '0'))
+			if (!ft_isdigit(commands->next->content[i]))
 			{
 				ft_error("exit: numeric argument required",
 				commands->content, 2);

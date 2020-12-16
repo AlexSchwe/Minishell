@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#define MSG "syntax error near unexpected token"
 
 int	is_redir(char *str)
 {
@@ -23,26 +24,24 @@ int	is_redir(char *str)
 int	ft_syntax_error(t_parse *head)
 {
 	t_parse	*new;
-	char	msg;
-
-	msg = "syntax error near unexpected token";
+	
 	new = head->next;
 	if (!new)
 		return (0);
 	if (new && is_semi_pipe(new->content) && !new->type)
-		return (!ft_error("", new->content, 2));
+		return (!ft_error(MSG, new->content, 2));
 	while (new && new->next)
 	{
 		if (!new->type)
 			if ((is_redir(new->content) && is_redir(new->next->content))
 			|| (is_semi_pipe(new->content) && is_semi_pipe(new->next->content)))
-				return (!ft_error(msg, new->content, 2));
+				return (!ft_error(MSG, new->content, 2));
 		new = new->next;
 	}
 	if (!new->type)
 	{
 		if (!ft_strcmp(new->content, "|") || is_redir(new->content))
-			return (!ft_error(msg, new->content, 2));
+			return (!ft_error(MSG, new->content, 2));
 		if (!ft_strcmp(new->content, ";"))
 			delete_parser(new);
 	}

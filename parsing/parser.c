@@ -32,7 +32,7 @@ char	**parse_to_char(t_parse *parse)
 	return (dest);
 }
 
-t_parse	*create_parse(t_parse *current, char *content, int alias, int prev, int space)
+t_parse	*create_parse(t_parse *current, char *content, int alias, int prev)
 {
 	t_parse *next;
 
@@ -44,7 +44,7 @@ t_parse	*create_parse(t_parse *current, char *content, int alias, int prev, int 
 	next->content = content;
 	next->alias = alias;
 	next->prev = prev;
-	next->space = space;
+	next->space = 0;
 	next->type = 0;
 	next->previous = current;
 	return (next);
