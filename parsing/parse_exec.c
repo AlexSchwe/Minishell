@@ -60,8 +60,8 @@ int		ft_parse_path(char *exec, char **commands, char **dir)
 
 int		parse_child(t_parse *parse)
 {
-	char **path;
-	char **commands;
+	char		**path;
+	char		**commands;
 	struct stat	filestat;
 
 	commands = parse_to_char(parse);
@@ -72,7 +72,6 @@ int		parse_child(t_parse *parse)
 		ft_execve(parse->content, commands, parse->content);
 	free(commands);
 	ft_error("command not found", parse->content, 127);
-	exit(g_status);
+	exit(127);
 	return (1);
-	return (0);
 }
