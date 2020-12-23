@@ -58,46 +58,21 @@ int		ft_parse_path(char *exec, char **commands, char **dir)
 **puis dans le dossier présent
 */
 
-int		ft_parse_exec(char *exec, char **commands, char **dir)
-{
-	char		*file[2];
-	struct stat	filestat;
-
-	file[0] = NULL;
-	file[1] = NULL;
-	if (dir)
-		ft_parse_path(exec, commands, dir);
-	file[0] = getcwd(file[0], 0);
-	file[1] = ft_strjoin(file[0], "/");
-	free(file[0]);
-	file[0] = ft_strjoin(file[1], exec);
-	if (lstat(file[0], &filestat) == 0 && (S_ISREG(filestat.st_mode)))
-	{
-		free(file[0]);
-		free(file[1]);
-		ft_execve(exec, commands, exec);
-	}
-	free(file[0]);
-	free(file[1]);
-	ft_error(exec, "command not found", 127);
-	exit(127);
-	return (1);
-}
-
-/*
-**déclenche parse_exec
-*/
-
 int		parse_child(t_parse *parse)
 {
 	char **path;
 	char **commands;
+	struct stat	filestat;
 
 	commands = parse_to_char(parse);
 	path = ft_split(find_key("PATH"), ':');
-	ft_parse_exec(parse->content, commands, path);
-	ft_free_vec(path);
+	if (path)
+		ft_parse_path(parse->content, commands, path);
+	if (lstat(parse->content, &filestat) == 0)
+		ft_execve(parse->content, commands, parse->content);
 	free(commands);
-	exit(0);
+	ft_error("command not found", parse->content, 127);
+	exit(g_status);
+	return (1);
 	return (0);
 }
